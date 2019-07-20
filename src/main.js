@@ -1,8 +1,32 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false
+import { Header,Swipe, SwipeItem,Button } from 'mint-ui';
+Vue.component(Header.name, Header);
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Button.name, Button);
+
+import vueRouter from "vue-router"
+Vue.use(vueRouter)
+import router from "./router.js"
+
+import vueResource from "vue-resource"
+Vue.use(vueResource)
+Vue.http.options.root ="http://www.liulongbin.top:3005/"
+
+import "./assets/mui-master/dist/css/mui.css"
+import "./assets/mui-master/dist/css/icons-extra(1).css"
+import "./assets/mui-master/dist/fonts/mui-icons-extra.ttf"
+
+import moment from "moment"
+Vue.filter("dateFotmat",function(dataStr,patter) {
+  return moment(dataStr).format(patter)
+})
 
 new Vue({
+  el:"#app",
+  data:{},
   render: h => h(App),
-}).$mount('#app')
+  router,
+})
