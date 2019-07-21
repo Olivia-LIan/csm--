@@ -1,6 +1,6 @@
 <template>
   <div id="content">
-    <mt-header fixed title="csm"></mt-header>
+    <mt-header fixed title="csm" class="header"></mt-header>
 
     <transition>
       <router-view></router-view>
@@ -34,9 +34,6 @@ import mui from "./assets/mui-master/dist/js/mui.js";
 
 export default {
   mounted() {
-    mui(".mui-scroll-wrapper").scroll({
-      deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
-    });
     mui("header,nav").on("tap", "a", function() {
       mui.openWindow({ url: this.href });
     });
@@ -69,5 +66,8 @@ export default {
 .v-enter-active,
 .v-leave-active {
   transition: all 0.3s ease;
+}
+.header {
+  z-index: 10
 }
 </style>

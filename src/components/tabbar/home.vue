@@ -23,10 +23,10 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <img src="../../images/menu3.png" alt="">
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -87,11 +87,12 @@ export default {
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell {
     border: 0;
+    padding: 0 15px;
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell a {
     font-size: 13px
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell img {
-    width: 60px;
+    width: 40px;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="cmt-Data">
     <h3 class="cmt-info">发表评论</h3>
+    <hr>
     <textarea placeholder="请在此处输入评论（评论字数不可超过120个）" maxlength="120" v-model="textVal"></textarea>
     <mt-button type="primary" size="large" class="cmt-btn" @click="addList">发表评论</mt-button>
     <div class="cmt-list" v-for="(item,i) in cmtList" :key="i">

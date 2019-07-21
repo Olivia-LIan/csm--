@@ -38,7 +38,7 @@ export default {
     }
   },
   components: {
-    comments
+    comments:comments
   }
 };
 </script>
