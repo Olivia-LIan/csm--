@@ -1,9 +1,17 @@
 <template>
   <div id="content">
-    <mt-header fixed title="csm" class="header"></mt-header>
+    <mt-header title="张张·不知春">
+      <mt-button
+        icon="back"
+        slot="left"
+        @click="back"
+        class="back"
+        v-if="$route.path =='/home'?false:true"
+      >返回</mt-button>
+    </mt-header>
 
     <transition>
-      <router-view></router-view>
+      <router-view ></router-view>
     </transition>
 
     <nav class="mui-bar mui-bar-tab">
@@ -17,7 +25,7 @@
       </router-link>
       <router-link class="mui-tab-item" to="/shopcart">
         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <span class="mui-badge">0</span>
+          <span class="mui-badge" id="badge" ref="badge">{{$store.getters.getCount}}</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -33,10 +41,19 @@
 import mui from "./assets/mui-master/dist/js/mui.js";
 
 export default {
+  data() {
+    return {
+    };
+  },
   mounted() {
     mui("header,nav").on("tap", "a", function() {
       mui.openWindow({ url: this.href });
     });
+  },
+  methods: {
+    back() {
+      this.$router.go(-1);
+    },
   }
 };
 </script>
@@ -48,7 +65,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-top: 40px;
   padding-bottom: 50px;
   overflow-x: hidden;
 }
@@ -68,6 +84,10 @@ export default {
   transition: all 0.3s ease;
 }
 .header {
-  z-index: 10
+  z-index: 10;
+}
+.back {
+  margin-bottom: 0;
+  width: 60px;
 }
 </style>

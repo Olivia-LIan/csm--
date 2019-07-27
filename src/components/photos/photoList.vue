@@ -8,14 +8,15 @@
           :class="['mui-control-item',item.id == 0 ? 'mui-active' : '']"
           v-for="item in photolist"
           :key="item.id"
-         @click="getPhotoList(item.id)">{{ item.title }}</a>
+          @click="getPhotoList(item.id)"
+        >{{ item.title }}</a>
       </div>
     </div>
     <ul>
       <router-link v-for="item in list" :key="item.id" tag="li" :to="'/home/photoinfo/'+item.id">
         <img v-lazy="item.img_url" />
         <div class="info">
-          <h1 class="info-title">{{ item.title }}</h1>
+          <h2 class="info-title">{{ item.title }}</h2>
           <div class="info-content">{{ item.zhaiyao }}</div>
         </div>
       </router-link>
@@ -25,17 +26,17 @@
 
 <script>
 import mui from "../../assets/mui-master/dist/js/mui.js";
-
+import { getAllPhoto,getPhotoList } from "../../api/index"
 export default {
   data() {
     return {
-      photolist:[],
-      list:[]
+      photolist: [],
+      list: []
     };
   },
   created() {
     this.getAllPhoto();
-    this. getPhotoList(0)
+    this.getPhotoList(0);
   },
   mounted() {
     mui(".mui-scroll-wrapper").scroll({
@@ -47,20 +48,15 @@ export default {
   },
   methods: {
     getAllPhoto() {
-      this.$http.get("api/getimgcategory").then(res => {
-        if (res.body.status == 0) {
-          res.body.message.unshift({ id: 0, title: "全部" });
-          this.photolist = res.body.message;
-        }
+      getAllPhoto().then(res => {
+          res.message.unshift({ id: 0, title: "全部" });
+          this.photolist = res.message;
       });
     },
-    getPhotoList(cateid){
-      this.$http.get("api/getimages/"+cateid)
-      .then(res => {
-        if(res.body.status == 0) {
-          this.list = res.body.message
-        }
-      })
+    getPhotoList(cateid) {
+      getPhotoList(cateid).then(res => {
+          this.list = res.message;
+      });
     }
   }
 };
@@ -70,7 +66,7 @@ export default {
 * {
   touch-action: pan-y;
 }
-img[lazy=loading] {
+img[lazy="loading"] {
   width: 40px;
   height: 300px;
   margin: auto;
@@ -82,27 +78,39 @@ ul {
 li {
   position: relative;
   list-style: none;
-  margin: 10px;
+  margin: 0 20px 20px;
   background-color: #ccc;
+  border-radius: 5px;
+  overflow: hidden;
 }
 li img {
-   width: 100%;
-   vertical-align: middle;
+  width: 100%;
+  vertical-align: middle;
 }
 .info {
+  width: 90%;
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 17px;
   font-size: 12px;
   text-align: left;
-  padding: 0 5px;
-  background-color: rgba(0,0,0,.4);
+  padding: 15px 15px;
+  background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
-  max-height: 85px;
+  max-height: 83px;
+  border-radius: 5px;
 }
-.info h1 {
-  font-size: 13px;
+.info h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
 }
-
+.info-content {
+  text-indent: 2em;
+}
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="item in pageInfoDate" :key="item.id">
+      <li v-for="(item,i) in pageInfoDate" :key="i" @click="detail(item.id)">
         <div class="info-pic">
           <img :src="item.img_url" alt />
         </div>
@@ -18,26 +18,37 @@
         </div>
       </li>
     </ul>
+    <div class="btns" v-if="flag">
+      <mt-button type="danger" size="normal" plain class="more-btn" @click="getMore">加载更多</mt-button>
+    </div>
   </div>
 </template>
 
 <script>
+import { getPics } from "../../api/index";
 export default {
   data() {
     return {
       pageindex: 1,
-      pageInfoDate: []
+      pageInfoDate: [],
+      flag:true
     };
   },
   created() {
     this.getPics();
   },
   methods: {
-    getPics() {
-      this.$http.get("api/getgoods?pageindex=" + this.pageindex).then(res => {
-        console.log(res.body);
-        this.pageInfoDate = res.body.message;
-      });
+    async getPics() {
+      let { message } = await getPics(this.pageindex);
+      message !== [] && (this.pageInfoDate = this.pageInfoDate.concat(message));
+      message.length < 10 && (this.flag = false);
+    },
+    getMore() {
+      this.pageindex++;
+      this.getPics();
+    },
+    detail(id) {
+      this.$router.push({name:"goodsInfo",params:{id:id}})
     }
   }
 };

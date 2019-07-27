@@ -18,23 +18,21 @@
 </template>
 
 <script>
+import { getnewList } from "../../api/index.js"
 export default {
     data(){
         return {
-            newsList:null
+            newsList:[]
         }
     },
     created(){
         this.getnewList()
     },
     methods:{
-        getnewList(){
-            this.$http.get("api/getnewslist")
-            .then(res => {
-                if(res.body.status == 0) {
-                    this.newsList = res.body.message
-                }
-            })
+        getnewList() {
+          getnewList().then(res => {
+            this.newsList = res.message
+          })
         }
     }
 };
@@ -43,12 +41,20 @@ export default {
 <style scoped>
     .mui-table-view h1{
         font-size: 13px;
+        line-height: 20px;
         text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
+
     .mui-table-view .mui-ellipsis{
         font-size: 12px;
-        color: #e28731;
+        color: #ef4f4f;
         display: flex;
         justify-content: space-between;
+    }
+    .mui-table-view-cell > a:not(.mui-btn) {
+      margin: -8px -11px;
     }
 </style>
